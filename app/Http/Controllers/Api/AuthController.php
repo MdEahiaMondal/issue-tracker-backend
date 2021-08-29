@@ -7,6 +7,7 @@ use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegistryRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Laravel\Passport\Client;
 
@@ -27,6 +28,7 @@ class AuthController extends Controller
         return app()->handle($token_request);
     }
     public function register(UserRegistryRequest $request){
+        $request['password'] = Hash::make($request->password);
         $user = User::create($request->all());
         info($user);
         if ($user){
