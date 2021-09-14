@@ -12,7 +12,7 @@ trait HasPermissions
         return $this->roles()->whereIn('slug', $roles)->count();
     }
 
-    public function hasPermssion(...$permissions)
+    public function hasPermission(...$permissions)
     {
         return $this->permissions()->whereIn('slug', $permissions)->count() ||
             $this->roles()->whereHas('permissions', function ($q) use ($permissions) {

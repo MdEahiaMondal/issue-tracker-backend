@@ -15,8 +15,12 @@ class Role extends Model
         return $this->belongsToMany(Permission::class);
     }
 
-    public function hasPermssion(...$permissions){
+    public function hasPermission(...$permissions){
         return $this->permissions()->whereIn('slug', $permissions)->count() ;
+    }
+
+    public function scopeDeveloper($q){
+        return $q->where('slug', 'developer');
     }
 
 }

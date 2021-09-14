@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->get('/me', function (Request $request) {
-    return $request->user();
+    return response()->json([
+        'success' => true,
+        "message" => "data successfully loaded",
+        "data" => $request->user()
+    ]);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
