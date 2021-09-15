@@ -13,13 +13,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/me', function (Request $request) {
-    return response()->json([
-        'success' => true,
-        "message" => "data successfully loaded",
-        "data" => $request->user()
-    ]);
+Route::middleware('auth:api')->group(function () {
+    Route::get('/me', [\App\Http\Controllers\Api\UserController::class, 'me']);
 });
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
