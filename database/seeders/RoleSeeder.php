@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 
@@ -28,5 +29,10 @@ class RoleSeeder extends Seeder
                 'slug' => 'editor'
             ],
         ]);
+
+        $developer_role = Role::developer()->first();
+        $d_p = Permission::whereIn('slug', ['developer-dashboard'])->get()->pluck('id')->toArray();
+        $developer_role->permissions()->sync($d_p);
+
     }
 }

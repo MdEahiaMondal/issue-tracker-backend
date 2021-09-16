@@ -55,6 +55,6 @@ class User extends Authenticatable
 
     public function permissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(Permission::class, 'permission_users');
     }
 }

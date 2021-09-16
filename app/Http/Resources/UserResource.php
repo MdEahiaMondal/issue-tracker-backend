@@ -9,15 +9,22 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
+        $userRoles = $this->roles()->with('permissions')->get();
+        $roles = $userRoles->pluck('slug');
+        $rolePermissions = $userRoles->pluck('permissions')->flatten(1)->pluck('slug');
+        $userPermissions = $rolePermissions->merge($this->permissions->pluck('slug'));
         return [
-          "name" => $this->name,
-          "email" => $this->email,
-          "created_at" => $this->created_at->format('d-m-Y'),
+            "name" => $this->name,
+            "email" => $this->email,
+            "created_at" => $this->created_at->format('d-m-Y'),
+            "roles" => $roles,
+            "rolePermissions" => $rolePermissions,
+            "userPermissions" => $userPermissions,
         ];
     }
 }
